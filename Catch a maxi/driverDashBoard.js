@@ -1,38 +1,47 @@
 const driverDashB = document.getElementById('driver_dashBoard');
 const nameOfDriver = localStorage.getItem('driverName')
 
-if ('geolocation' in navigator) {
-    // Geolocation API is available
-    navigator.geolocation.getCurrentPosition(
-        function (position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-    
-            // Create a map centered on the user's location
-            const map = L.mapquest.map('map', {
-                center: [latitude, longitude],
-                layers: L.mapquest.tileLayer('map'),
-                zoom: 12
-            });
-    
-            // Add a marker at the user's location
-            L.marker([latitude, longitude], {
-                icon: L.mapquest.icons.marker(),
-                draggable: false
-            }).addTo(map);
-        },
-        function (error) {
-            // Error callback
-            console.log('Error occurred. Error code: ' + error.code);
-        }
-    );
-    
-} else {
-    console.log('Geolocation is not supported');
+let map;
+
+async function initMap() {
+  const { Map } = await google.maps.importLibrary("maps");
+
+  // Get the driver's location
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      const driverLatLng = new google.maps.LatLng(latitude, longitude);
+
+      // Initialize the map with the driver's location as the center
+      map = new Map(document.getElementById("map"), {
+        center: driverLatLng,
+        zoom: 8,
+      });
+
+      // Add a marker at the driver's location
+      new google.maps.Marker({
+        position: driverLatLng,
+        map: map,
+        title: nameOfDriver,
+      });
+    },
+    (error) => {
+      // Handle geolocation error
+      console.error("Error getting driver's location:", error);
+
+      // Initialize the map with a default center if geolocation fails
+      map = new Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    }
+  );
 }
 
-// Replace 'YOUR_API_KEY' with your actual MapQuest API key
-L.mapquest.key = 'KEY&from=Denver%2C+CO&to=Boulder%2C+CO&outFormat=json&ambiguities=ignore&routeType=fastest&doReverseGeocode=false&enhancedNarrative=false&avoidTimedConditions=true';
+initMap();
+
+
+
 
 
 // Obtain the user's latitude and longitude
