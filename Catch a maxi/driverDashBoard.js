@@ -84,10 +84,16 @@ function generateMarkers() {
             Math.random() * 360 // Random angle in degrees
         );
 
+        const customIcon = {
+            url: './images/commuter.png', // Replace with the path to your custom icon
+            scaledSize: new google.maps.Size(42, 42), // Adjust the size as needed
+        };
+
         const marker = new google.maps.Marker({
             position: nearbyMarkerLatLng,
             map: map,
-            title: `Marker ${i + 1}`
+            title: `Marker ${i + 1}`,
+            icon: customIcon
         });
 
         markers.push(marker);
