@@ -81,6 +81,6 @@ formCommuter.addEventListener('submit', function(e) {
 
     console.log('Commuter stored in local storage successfully!');
 
-    window.location.href = 'commuterdashB.html';
+    window.location.href = 'commuterDashB.html';
 
 });
