@@ -13,7 +13,7 @@ dashBCommuter.appendChild(div);
 const simuleBtn = document.createElement('div');
 simuleBtn.setAttribute('type', 'button');
 simuleBtn.setAttribute('class', 'simulate')
-simuleBtn.textContent = "Tobetsa fa!, a re spane!"
+simuleBtn.textContent = "Tobetsa fa!, o tlhole!"
 dashBCommuter.appendChild(simuleBtn);
 
 let map;

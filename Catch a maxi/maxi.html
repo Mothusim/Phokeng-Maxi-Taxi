@@ -36,11 +36,30 @@
                     <div class="driver_data" data-email>
                         <input type="text" class="sign__form" id="emailId" placeholder="Email" required>
                     </div>
+                    <div class="driver_data" data-createpassword>
+                        <input type="password" class="sign__form" id="createPassword" placeholder="Create Password." required>
+                    </div>
+                    <div class="driver_data" data-createpassword>
+                        <input type="password" class="sign__form" id="confirmPassword" placeholder="Confirm Password." required>
+                    </div>
+                    <div class="driver_data" data-button>
+                        <input type="submit" id="login" name="login" value="login">
+                        <input type="submit" id="signUp" name="submit" value="sign up">
+                    </div>
+                </form>
+            </div>
+
+            <div class="form__driverLogin" id="div_form_login">
+                <form action="" id="maxiLogin" data-form>
+                    <div class="driver_data" data-name>
+                        <input type="text" class="sign__form" id="nameDriver" placeholder="Name" required>
+                    </div>
                     <div class="driver_data" data-password>
                         <input type="password" class="sign__form" id="password" placeholder="Password." required>
                     </div>
                     <div class="driver_data" data-button>
-                        <input type="submit" id="signUp" name="submit" value="sign up">
+                        <input type="submit" id="signIn" name="submit" value="signi in">
+                        <input type="submit" id="back" name="submit" value="back">
                     </div>
                 </form>
             </div>
@@ -61,15 +80,33 @@
                     <div class="commuter_data" data-commuter-email>
                         <input type="text" class="sign__form" id="commuterEmail" placeholder="Email" required>
                     </div>
-                    <div class="commuter_data" data-commuter-password>
-                        <input type="password" class="sign__form" id="commuterPassword" placeholder="Password." required>
+                    <div class="commuter_data" data-createpassword>
+                        <input type="password" class="sign__form" id="commuterCreatePassword" placeholder="Create Password." required>
                     </div>
-                    <div class="commuter_data" data-commuter-button>
-                        <input type="submit" id="register" name="submit" value="Register">
+                    <div class="commuter_data" data-createpassword>
+                        <input type="password" class="sign__form" id="commuterConfirmPassword" placeholder="Confirm Password." required>
+                    </div>
+                    <div class="commuter_data" data-button>
+                        <input type="submit" id="loginCommuter" name="submit" value="login">
+                        <input type="submit" id="signUpCommuter" name="submit" value="sign up">
                     </div>
                 </form>
             </div>
 
+            <div class="form__commuter_login" id="commuter_formLogin">
+                <form action="" id="commuter_login" data-commuter-form>
+                    <div class="commuter_data" data-commuter-name>
+                        <input type="text" class="sign__form" id="nameCommuter" placeholder="Name" required>
+                    </div>
+                    <div class="commuter_data" data-password>
+                        <input type="password" class="sign__form" id="commuterPassword" placeholder="Password." required>
+                    </div>
+                    <div class="commuter_data" data-button>
+                        <input type="submit" id="signInCommuter" name="submit" value="login">
+                        <input type="submit" id="commuterBack" name="submit" value="back">
+                    </div>
+                </form>
+            </div>
 
         </div>
     </footer>
