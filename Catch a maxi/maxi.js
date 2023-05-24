@@ -53,8 +53,8 @@ const driverSignIn = document.getElementById('signIn');
 const driverBackBtn = document.getElementById('back');
 const driverLogin = document.getElementById('login');
 
-driverLogin.addEventListener('click', () => {
-    //e.preventDefault()
+driverLogin.addEventListener('click', (e) => {
+    e.preventDefault()
 
     if (loginDiv.style.display === "none") {
         loginDiv.style.display = "block";
