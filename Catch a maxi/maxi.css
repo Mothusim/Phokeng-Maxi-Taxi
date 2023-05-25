@@ -1,9 +1,32 @@
+
 body {
-    display: flex;
+    
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    background-color: #745ec2;
+    background-color: black;
+    
+}
+
+nav {
+    width: 100%;
+    background-color: rgb(255, 200, 0)
+}
+
+h3 {
+    color: white;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.myIcons {
+    display: flex;
+    justify-content: center;
+    margin-top: -70px;
+}
+
+.container {
+    display: flex;
+    padding: 30px;
+    margin: 100px;
 }
 
 .sign__form {
@@ -11,47 +34,57 @@ body {
     height: 30px
 }
 
-#signUp {
-    width: 257px;
+#signUp, #login, #signIn, #back, #loginCommuter, #signUpCommuter, #signInCommuter, #commuterBack {
+    width: 100px;
     height: 30px;
 }
 
-.form__driver {
+#signUp, #back, #signUpCommuter, #commuterBack {
+    margin-left: 53px;
+}
+
+.driver_data, .commuter_data {
+    padding: 5px
+}
+
+.form__driver, .form__driverLogin, .form__commuter_login {
     display: none;
 }
 
-.icon__taxi {
-    position: relative;
-    display: inline-block;
-    
+.form__commuter {
+    display: none;
 }
 
-
-/*.icon__taxi h3{
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 10px;
-    background-color: white;
-    padding: 10px;
-}*/
+.icon_commuter, .icon__taxi {
+    margin-left: 100px;
+    text-align: center;
+    padding: 40px;
+}
 
 .h3 {
     height: 80vh;
     margin-top: 70px;
 }
 
-/* .driver_dashB {
-    height: 500px;
-    width: 500px
-} */
-
-.driver_dashB {
+.driver_dashB, .commuterDashB {
     width: 100%;
-    height: 400px; /* Adjust the height as needed */
+    height: 400px;
+    /* Adjust the height as needed */
 }
 
-#driverDashB {
-    width: 100%;
-    height: 100%;
+.simulate {
+    width: 80px;
+    height: 35px;
+    display: flex;
+    text-align: center;
+    background-color: chocolate;
+    border-radius: 8%;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    cursor: pointer;
+}
+
+.driver_name {
+    padding: 30px;
 }

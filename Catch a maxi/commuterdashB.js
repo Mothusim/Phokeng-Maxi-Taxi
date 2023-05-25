@@ -1,22 +1,23 @@
-const nameOfDriver = localStorage.getItem('driverName');
-const driverDashB = document.getElementById('driver_dashBoard');
-const driverDiv = document.createElement('div')
-driverDiv.setAttribute('class', 'driver_name')
-driverDiv.innerHTML = `<h3>O amogetswe ${nameOfDriver}, a re batle  Bapagami!</h3>`
-driverDashB.appendChild(driverDiv)
+const nameOfCommuter = localStorage.getItem('commuterName');
+const dashBCommuter = document.getElementById('commuter_dashBoard');
+const commuterDiv = document.createElement('div');
+commuterDiv.setAttribute('class', 'commuter_name')
+commuterDiv.innerHTML = `<h3>O amogetswe ${nameOfCommuter}, A re tlhole  Dipalangwa!</h3>`
+dashBCommuter.appendChild(commuterDiv);
 
 const div = document.createElement('div');
 div.setAttribute('id', 'map');
-div.setAttribute('class', 'driver_dashB');
-driverDashB.appendChild(div);
+div.setAttribute('class', 'commuterDashB');
+dashBCommuter.appendChild(div);
 
 const simuleBtn = document.createElement('div');
 simuleBtn.setAttribute('type', 'button');
 simuleBtn.setAttribute('class', 'simulate')
-simuleBtn.textContent = "Tobetsa fa!, re spane!"
-driverDashB.appendChild(simuleBtn)
+simuleBtn.textContent = "Tobetsa fa!, o tlhole!"
+dashBCommuter.appendChild(simuleBtn);
 
 let map;
+let commuterMarker;
 let driverMarker;
 let markers = [];
 let directionsService;
@@ -39,15 +40,15 @@ async function initMap() {
             });
 
             const customIcon = {
-                url: './images/taxi.png', // Replace with the path to your custom icon
+                url: './images/commuter.png', // Replace with the path to your custom icon
                 scaledSize: new google.maps.Size(42, 42), // Adjust the size as needed
             };
 
             // Add a marker at the driver's location
-            driverMarker = new google.maps.Marker({
+            commuterMarker = new google.maps.Marker({
                 position: driverLatLng,
                 map: map,
-                title: nameOfDriver,
+                title: nameOfCommuter,
                 icon: customIcon
             });
 
@@ -57,7 +58,7 @@ async function initMap() {
                 Math.random() * 360 // Random angle in degrees
             );
 
-            commuterMarker = new google.maps.Marker({
+            new google.maps.Marker({
                 position: nearbyMarkerLatLng,
                 map: map,
                 title: 'Nearby Marker'
@@ -77,15 +78,15 @@ async function initMap() {
 }
 
 function generateMarkers() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 2; i++) {
         const nearbyMarkerLatLng = google.maps.geometry.spherical.computeOffset(
-            driverMarker.getPosition(),
+            commuterMarker.getPosition(),
             2500, // 2.5 km in meters
             Math.random() * 360 // Random angle in degrees
         );
 
         const customIcon = {
-            url: './images/commuter.png', // Replace with the path to your custom icon
+            url: './images/taxi.png', // Replace with the path to your custom icon
             scaledSize: new google.maps.Size(42, 42), // Adjust the size as needed
         };
 
@@ -101,38 +102,39 @@ function generateMarkers() {
 }
 
 function simulateRoute() {
-    if (markers.length === 0) {
-        console.log("No markers available.");
-        return;
-    }
+    // Find the nearest marker to the commuterMarker
+    let nearestMarker = null;
+    let nearestDistance = Infinity;
 
-    if (!directionsService) {
-        directionsService = new google.maps.DirectionsService();
-    }
+    markers.forEach((marker) => {
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+            marker.getPosition(),
+            commuterMarker.getPosition()
+        );
 
-    if (!directionsRenderer) {
-        directionsRenderer = new google.maps.DirectionsRenderer({
-            map: map
-        });
-    }
+        if (distance < nearestDistance) {
+            nearestMarker = marker;
+            nearestDistance = distance;
+        }
+    });
 
-    const nearestMarker = findNearestMarker();
-
-    if (!nearestMarker) {
-        console.log("No nearest marker found.");
-        return;
-    }
+    // Create a route from the nearest marker to the commuterMarker
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+    });
 
     const request = {
-        origin: driverMarker.getPosition(),
-        destination: nearestMarker.getPosition(),
-        travelMode: google.maps.TravelMode.DRIVING
+        origin: nearestMarker.getPosition(),
+        destination: commuterMarker.getPosition(),
+        travelMode: google.maps.TravelMode.DRIVING,
     };
 
     directionsService.route(request, (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
             directionsRenderer.setDirections(response);
 
+            // Move the nearest marker along the route
             const route = response.routes[0];
             const routePath = route.overview_path;
             const numSteps = routePath.length;
@@ -146,7 +148,7 @@ function simulateRoute() {
                 }
 
                 const position = routePath[step];
-                driverMarker.setPosition(position);
+                nearestMarker.setPosition(position);
 
                 step++;
             }, 100); // Adjust the interval duration as needed
@@ -156,51 +158,9 @@ function simulateRoute() {
     });
 }
 
-// function handleRouteCompletion() {
-//     directionsRenderer.setDirections({ routes: [] }); // Clear the route
-//     commuterMarker.setMap(null); // Remove the added marker
-// }
-
-function findNearestMarker() {
-    let nearestMarker = null;
-    let nearestDistance = Infinity;
-
-    markers.forEach(marker => {
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(
-            driverMarker.getPosition(),
-            marker.getPosition()
-        );
-
-        if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearestMarker = marker;
-        }
-    });
-
-    return nearestMarker;
-}
-
 function handleRouteCompletion(marker) {
     directionsRenderer.setDirections({ routes: [] }); // Clear the route
-    marker.setMap(null); // Remove the marker
-
-    const markerIndex = markers.indexOf(marker);
-    if (markerIndex > -1) {
-        markers.splice(markerIndex, 1);
-    }
-
-    if (markers.length > 0) {
-        simulateRoute();
-    } else {
-        console.log("All markers visited.");
-    }
+    marker.setMap(null); // Remove the completed marker
 }
 
-
 initMap();
-
-
-
-
-
-
